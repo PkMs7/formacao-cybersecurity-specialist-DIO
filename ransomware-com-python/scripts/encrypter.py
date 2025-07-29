@@ -5,24 +5,24 @@ import pyaes
 ## Carrega variáveis de ambiente do arquivo .env
 load_dotenv()
 
-## Abrir o arquivo criptografado
-file_name = os.environ['FILE_NAME']
-file = open(file_name, 'rb')
+## Abrir o arquivo a ser criptografado
+file_path = os.environ['FILE_PATH']
+file = open(file_path, 'rb')
 file_data = file.read()
 file.close()
 
-## Remover o arquivo
-os.remove(file_name)
+## Remover o arquivo a ser criptografado
+os.remove(file_path)
 
-## Chave de criptografia
+## Importar a chave de criptografia
 key = os.environ['CRYPTO_KEY']
 aes = pyaes.AESModeOfOperationCTR(key.encode('utf-8'))
 
-## Criptografar arquivo
+## Criptografar arquivo a ser criptografado
 crypto_data = aes.encrypt(file_data)
 
 ## Salvar o arquivo criptografado
-new_file = file_name + os.environ['FILE_EXTENSION']
+new_file = file_path + os.environ['FILE_EXTENSION']
 new_file = open(f'{new_file}', 'wb')
 new_file.write(crypto_data)
 new_file.close()
